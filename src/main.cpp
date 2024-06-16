@@ -1,9 +1,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
 
-#include <ui/components/textbox.hpp>
-#include <ui/components/rect.hpp>
-#include <ui/blocks/tool.hpp>
+#include <ui/elements/tool.hpp>
 
 #define TFT_RST PA12
 #define TFT_DC PA11
@@ -15,6 +13,9 @@
 #define BTN_UP PA2
 #define BTN_DN PA1
 #define BTN_OK PA0
+
+#define TEMP_CH1 PA6
+#define TEMP_CH2 PA4
 
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
@@ -33,22 +34,15 @@ void setup(void)
     tft.setRotation(1);
 }
 
-UiTool tool{&tft, 32, 32};
+UiTool toolCH1{&tft, {32, 16}};
+UiTool toolCH2{&tft, {32, 64}};
+UiSchedule<2> ui{{&toolCH1, &toolCH2}};
 
 void loop()
 {
-    tool.process();
-    delay(100);
-    if (digitalRead(BTN_UP) == 0)
-    {
-        tool.setText("UP");
-    }
-    else if (digitalRead(BTN_DN) == 0)
-    {
-        tool.setText("DN");
-    }
-    else if (digitalRead(BTN_OK) == 0)
-    {
-        tool.setText("OK");
-    }
+    toolCH1.setTemps(512, analogRead(TEMP_CH1));
+    toolCH2.setTemps(256, analogRead(TEMP_CH2));
+    ui.update();
+    ui.process();
+    delay(500);
 }

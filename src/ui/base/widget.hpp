@@ -1,22 +1,25 @@
 #pragma once
+#include <ui/base/process.hpp>
 #include <Adafruit_GFX.h>
 
-class UiWidget
+
+struct UiVec {
+    int x, y;
+};
+
+struct UiBox {
+    UiVec orig;
+    UiVec size;
+};
+
+class UiWidget : public UiProcessBase
 {
 protected:
     Adafruit_GFX *gfx;
-    int x, y;
+    UiVec orig;
 
 public:
-    UiWidget(Adafruit_GFX *gfx, int x, int y) : gfx{gfx}, x{x}, y{y}
+    UiWidget(Adafruit_GFX *gfx, UiVec orig) : gfx{gfx}, orig{orig}
     {
-    }
-
-    virtual void draw() const = 0;
-
-    virtual void move(int x, int y)
-    {
-        this->x = x;
-        this->y = y;
     }
 };

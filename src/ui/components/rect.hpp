@@ -3,24 +3,24 @@
 
 class UiRect : public UiWidget
 {
-    int w, h;
+    UiVec size;
     uint16_t color;
-    bool full;
+    bool fill;
 
-    void draw() const
+    void process()
     {
-        if (full)
+        if (fill)
         {
-            gfx->fillRect(x, y, w, h, color);
+            gfx->fillRect(orig.x, orig.y, size.x, size.y, color);
         }
         else
         {
-            gfx->drawRect(x, y, w, h, color);
+            gfx->drawRect(orig.x, orig.y, size.x, size.y, color);
         }
     }
 
 public:
-    UiRect(Adafruit_GFX *gfx, int pos_x, int pos_y, int w, int h, uint16_t color = 0, bool full = true) : UiWidget(gfx, pos_x, pos_y), w{w}, h{h}, color{color}, full{full}
+    UiRect(Adafruit_GFX *gfx, UiBox box, uint16_t color = 0, bool fill = true) : UiWidget(gfx, box.orig), size{box.size}, color{color}, fill{fill}
     {
     }
 
@@ -29,9 +29,8 @@ public:
         this->color = color;
     }
 
-    void resize(int w, int h)
+    void resize(UiVec size)
     {
-        this->w = w;
-        this->h = h;
+        this->size = size;
     }
 };
