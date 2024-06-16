@@ -26,7 +26,6 @@
 | CH1 | PA6 |
 | CH2 | PA4 |
 
-
 ## Heater pins
 
 | Channel | Connection |
@@ -41,7 +40,6 @@
 | CH1 | PA7 |
 | Ch2 | PA5 |
 
-
 ## Button pins
 
 | Button | Connection |
@@ -49,3 +47,17 @@
 | UP | PA2 |
 | MID | PA0 |
 | DOWN | PA1 |
+
+## Buzzer
+
+| Connection |
+| - |
+| PB5 |
+
+## Unknown
+
+| Connection |
+| - |
+| PB3 |
+| PA15 |
+
