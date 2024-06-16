@@ -12,14 +12,14 @@ struct UiBox {
     UiVec size;
 };
 
-class UiWidget : public UiProcessBase
+class UiObject : public UiProcess
 {
 protected:
     Adafruit_GFX *gfx;
     UiVec orig;
 
 public:
-    UiWidget(Adafruit_GFX *gfx, UiVec orig) : gfx{gfx}, orig{orig}
+    UiObject(Adafruit_GFX *gfx, UiVec orig) : gfx{gfx}, orig{orig}
     {
     }
 };

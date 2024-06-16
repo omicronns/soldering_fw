@@ -1,6 +1,6 @@
 #pragma once
 
 
-struct UiProcessBase {
+struct UiProcess {
     virtual void process() = 0;
 };

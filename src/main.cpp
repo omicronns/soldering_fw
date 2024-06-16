@@ -1,7 +1,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
 
-#include <ui/elements/tool.hpp>
+#include <ui/widgets/tool.hpp>
+#include <ui/objects/rect.hpp>
 
 #define TFT_RST PA12
 #define TFT_DC PA11
@@ -17,13 +18,13 @@
 #define TEMP_CH1 PA6
 #define TEMP_CH2 PA4
 
-Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+Adafruit_ST7735 gfx = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 void setup(void)
 {
-    tft.initR(INITR_144GREENTAB);
+    gfx.initR(INITR_144GREENTAB);
 
-    tft.fillScreen(ST7735_BLACK);
+    gfx.fillScreen(ST7735_BLACK);
 
     pinMode(BTN_UP, INPUT);
     pinMode(BTN_DN, INPUT);
@@ -31,18 +32,26 @@ void setup(void)
     pinMode(TFT_BL, OUTPUT);
     digitalWrite(TFT_BL, HIGH);
 
-    tft.setRotation(1);
+    gfx.setRotation(1);
 }
 
-UiTool toolCH1{&tft, {32, 16}};
-UiTool toolCH2{&tft, {32, 64}};
-UiSchedule<2> ui{{&toolCH1, &toolCH2}};
+UiTool toolCH1{&gfx, {32, 16}};
+UiTool toolCH2{&gfx, {32, 64}};
+UiRect rect{&gfx, {0, 0, 128, 128}, color565(0, 0, 0)};
+UiSchedule<2> ui_main{{&toolCH1, &toolCH2}, true};
+UiSchedule<1> ui_menu{{&rect}, true};
+UiProcess* ui_active = &ui_menu;
 
 void loop()
 {
     toolCH1.setTemps(512, analogRead(TEMP_CH1));
     toolCH2.setTemps(256, analogRead(TEMP_CH2));
-    ui.update();
-    ui.process();
-    delay(500);
+    if (digitalRead(BTN_UP) == 0) {
+        ui_active = &ui_menu;
+    }
+    if (digitalRead(BTN_DN) == 0) {
+        ui_active = &ui_main;
+    }
+    ui_active->process();
+    delay(100);
 }

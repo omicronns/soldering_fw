@@ -1,7 +1,7 @@
 #pragma once
 #include <ui/base/schedule.hpp>
 #include <ui/base/util.hpp>
-#include <ui/components/printbox.hpp>
+#include <ui/objects/printbox.hpp>
 
 class UiTool : public UiSchedule<2>
 {

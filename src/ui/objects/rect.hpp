@@ -1,7 +1,7 @@
 #pragma once
-#include <ui/base/widget.hpp>
+#include <ui/base/object.hpp>
 
-class UiRect : public UiWidget
+class UiRect : public UiObject
 {
     UiVec size;
     uint16_t color;
@@ -20,7 +20,8 @@ class UiRect : public UiWidget
     }
 
 public:
-    UiRect(Adafruit_GFX *gfx, UiBox box, uint16_t color = 0, bool fill = true) : UiWidget(gfx, box.orig), size{box.size}, color{color}, fill{fill}
+    UiRect(Adafruit_GFX *gfx, UiBox box, uint16_t color = 0, bool fill = true) :
+        UiObject(gfx, box.orig), size{box.size}, color{color}, fill{fill}
     {
     }
 

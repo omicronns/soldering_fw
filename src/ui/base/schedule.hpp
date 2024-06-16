@@ -4,17 +4,18 @@
 
 
 template<std::size_t Count>
-class UiSchedule : public UiProcessBase {
-    bool changed;
+class UiSchedule : public UiProcess {
+    bool changed = true;
+    const bool always;
 public:
-    std::array<UiProcessBase*, Count> schedule;
+    std::array<UiProcess*, Count> schedule;
 
-    UiSchedule(std::array<UiProcessBase*, Count> schedule) :
-        schedule{schedule}
+    UiSchedule(std::array<UiProcess*, Count> schedule, bool always = false) :
+        always{always}, schedule{schedule}
     {}
 
     void process() {
-        if (changed) {
+        if (changed || always) {
             changed = false;
 
             for (auto ui : schedule) {

@@ -1,5 +1,5 @@
 #pragma once
-#include <ui/base/widget.hpp>
+#include <ui/base/object.hpp>
 
 struct UiPrinter
 {
@@ -21,7 +21,7 @@ struct UiNumberPrinter : public UiPrinter
     }
 };
 
-class UiPrintBox : public UiWidget
+class UiPrintBox : public UiObject
 {
     UiPrinter *printer;
     uint8_t size;
@@ -41,7 +41,7 @@ class UiPrintBox : public UiWidget
 
 public:
     UiPrintBox(Adafruit_GFX *gfx, UiVec orig, uint8_t size, UiPrinter *printer, uint16_t colorfg = 0, uint16_t colorbg = 0) :
-        UiWidget(gfx, orig), printer{printer}, size{size}, colorfg{colorfg}
+        UiObject(gfx, orig), printer{printer}, size{size}, colorfg{colorfg}
     {
     }
 
