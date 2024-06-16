@@ -14,11 +14,7 @@ public:
         schedule{schedule}
     {}
 
-    virtual void update(uint32_t time) = 0;
-
-    void process(uint32_t time) {
-        update(time);
-
+    void process() {
         if (redraw) {
             redraw = false;
 
