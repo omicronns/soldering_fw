@@ -1,4 +1,6 @@
-# Display Pins
+# Pins connections
+
+## Display Pins
 
 | Flex pin | Function | Connection |
 | - | - | - |
@@ -16,3 +18,34 @@
 | 12 | CSX | PA8 |
 | 13 | GND | GND |
 | 14 | NA | NC |
+
+## Thermocouple pins
+
+| Channel | Connection |
+| - | - |
+| CH1 | PA6 |
+| CH2 | PA4 |
+
+
+## Heater pins
+
+| Channel | Connection |
+| - | - |
+| CH1 | PB0 |
+| CH2 | PB1 |
+
+
+## Button pins
+
+| Button | Connection |
+| - | - |
+| UP | PA2 |
+| MID | PA0 |
+| DOWN | PA1 |
+
+## Shake sensor pins
+
+| Channel | Connection |
+| - | - |
+| CH1 | PA7 |
+| Ch2 | PA5 |
