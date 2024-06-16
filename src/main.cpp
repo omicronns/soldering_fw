@@ -1,6 +1,11 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
 
+#include <array>
+#include <ui/components/textbox.hpp>
+#include <ui/components/rect.hpp>
+#include <ui/blocks/tool.hpp>
+
 #define TFT_RST 12
 #define TFT_DC 11
 #define TFT_MOSI 10
@@ -13,21 +18,17 @@ Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RS
 void setup(void) {
   tft.initR(INITR_144GREENTAB);
 
+  tft.fillScreen(ST7735_BLACK);
+
   pinMode(TFT_BL, OUTPUT);
   digitalWrite(TFT_BL, HIGH);
 
   tft.setRotation(1);
-  tft.fillRect(0, 0, 128, 128, tft.color565(255, 0, 0));
-  tft.fillRect(0, 0, 64, 64, tft.color565(0, 255, 0));
-  tft.fillRect(64, 64, 64, 64, tft.color565(0, 0, 255));
-  tft.setTextColor(tft.color565(0, 0, 0));
-  tft.setCursor(0, 0);
-  tft.print("test");
 }
 
+UiTool tool{&tft, 32, 32};
+
 void loop() {
-  // tft.invertDisplay(true);
-  // delay(500);
-  // tft.invertDisplay(false);
-  // delay(500);
+  tool.drawall();
+  delay(100);
 }
