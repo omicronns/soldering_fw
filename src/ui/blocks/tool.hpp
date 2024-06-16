@@ -17,23 +17,24 @@ class UiTool : public UiBlock<2> {
     UiTextBox text;
 
     std::array<const char*, 3> texts = {
-    "qwe", "asd", "zxc"
+        "qwe", "asd", "zxc"
     };
     int idx_texts = 0;
 public:
     UiTool(Adafruit_GFX* gfx, int x, int y) :
         UiBlock<2>{{&background, &text}},
-        timer{{5}},
-        background{gfx, x, y, 32, 16, color565(255, 255, 255)},
-        text{gfx, x, y, color565(255, 0, 0)}
+        timer{{500}},
+        background{gfx, x, y, 40, 16, color565(255, 255, 255)},
+        text{gfx, x, y, 2, color565(255, 0, 0)}
     {}
 
-    void update() {
-        timer.update();
+    void update(uint32_t time) {
+        timer.update(time);
 
         if (timer.trig(ToolTimers::Text)) {
             text.setText(texts[idx_texts]);
             idx_texts = (idx_texts + 1) % texts.size();
+            changed();
         }
     }
 };

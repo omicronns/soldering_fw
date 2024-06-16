@@ -29,6 +29,6 @@ void setup(void) {
 UiTool tool{&tft, 32, 32};
 
 void loop() {
-  tool.drawall();
+  tool.process(millis());
   delay(100);
 }

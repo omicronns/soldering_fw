@@ -34,6 +34,13 @@
 | CH1 | PB0 |
 | CH2 | PB1 |
 
+## Shake sensor pins
+
+| Channel | Connection |
+| - | - |
+| CH1 | PA7 |
+| Ch2 | PA5 |
+
 
 ## Button pins
 
@@ -42,10 +49,3 @@
 | UP | PA2 |
 | MID | PA0 |
 | DOWN | PA1 |
-
-## Shake sensor pins
-
-| Channel | Connection |
-| - | - |
-| CH1 | PA7 |
-| Ch2 | PA5 |

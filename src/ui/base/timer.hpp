@@ -1,29 +1,32 @@
 #pragma once
 #include <array>
+#include <stdint.h>
 
 
 template<std::size_t TimersCount>
 class UiTimer {
-    std::array<std::size_t, TimersCount> ticks;
-    std::array<std::size_t, TimersCount> periods;
+    uint32_t last_time = 0;
+    std::array<uint32_t, TimersCount> times;
+    std::array<uint32_t, TimersCount> periods;
 public:
-    UiTimer(std::array<std::size_t, TimersCount> periods) :
-        ticks{0},
+    UiTimer(std::array<uint32_t, TimersCount> periods) :
+        times{0},
         periods{periods}
     {}
 
-    void update() {
+    void update(uint32_t time) {
         for (std::size_t idx = 0; idx < TimersCount; idx += 1) {
-            if (ticks[idx] < periods[idx]) {
-                ticks[idx] += 1;
+            if (times[idx] <= periods[idx]) {
+                times[idx] += time - last_time;
             }
             else {
-                ticks[idx] = 0;
+                times[idx] = 0;
             }
+            last_time = time;
         }
     }
 
     bool trig(std::size_t idx) {
-        return ticks[idx] == periods[idx];
+        return times[idx] > periods[idx];
     }
 };
