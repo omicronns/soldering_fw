@@ -28,7 +28,7 @@ class UiPrintBox : public UiObject
     uint16_t colorfg;
     uint16_t colorbg;
 
-    void process()
+    void update()
     {
         if (printer)
         {

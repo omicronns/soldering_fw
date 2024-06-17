@@ -19,7 +19,7 @@ protected:
     UiVec orig;
 
 public:
-    UiObject(Adafruit_GFX *gfx, UiVec orig) : gfx{gfx}, orig{orig}
+    UiObject(Adafruit_GFX *gfx, UiVec orig) : UiProcess{false}, gfx{gfx}, orig{orig}
     {
     }
 };

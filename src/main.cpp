@@ -38,8 +38,8 @@ void setup(void)
 UiTool toolCH1{&gfx, {32, 16}};
 UiTool toolCH2{&gfx, {32, 64}};
 UiRect rect{&gfx, {0, 0, 128, 128}, color565(0, 0, 0)};
-UiSchedule<2> ui_main{{&toolCH1, &toolCH2}, true};
-UiSchedule<1> ui_menu{{&rect}, true};
+UiSchedule<2> ui_main{{&toolCH1, &toolCH2}};
+UiSchedule<1> ui_menu{{&rect}};
 UiProcess* ui_active = &ui_menu;
 
 void loop()
@@ -47,6 +47,7 @@ void loop()
     toolCH1.setTemps(512, analogRead(TEMP_CH1));
     toolCH2.setTemps(256, analogRead(TEMP_CH2));
     if (digitalRead(BTN_UP) == 0) {
+        rect.mark();
         ui_active = &ui_menu;
     }
     if (digitalRead(BTN_DN) == 0) {

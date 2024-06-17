@@ -7,7 +7,7 @@ class UiRect : public UiObject
     uint16_t color;
     bool fill;
 
-    void process()
+    void update()
     {
         if (fill)
         {

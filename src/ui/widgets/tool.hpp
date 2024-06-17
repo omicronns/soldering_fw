@@ -20,7 +20,8 @@ public:
     void setTemps(int set, int act)
     {
         printerSet.setValue(set);
+        tempSet.mark();
         printerAct.setValue(act);
-        update();
+        tempAct.mark();
     }
 };
