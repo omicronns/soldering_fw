@@ -33,7 +33,7 @@ private:
 
 public:
     InputMgr(std::array<Type, Count> cfg, uint32_t period) :
-        cfg{cfg}, state{State::Idle}, timer{{period}}
+        cfg{cfg}, state{State::Idle}, events{Event::Idle}, timer{{period}}
     {
     }
 
@@ -41,9 +41,6 @@ public:
         timer.update(time);
 
         for(int idx = 0; idx < Count; idx += 1) {
-            if (events[idx] != Event::Idle) {
-                return;
-            }
             switch (state[idx]) {
                 case State::Idle:
                     if (values[idx] == 0) {
@@ -92,6 +89,7 @@ public:
                             events[idx] = Event::Single;
                         }
                     }
+                    break;
                 case State::Cooldown:
                     if (values[idx] != 0) {
                         state[idx] = State::Idle;
@@ -103,9 +101,7 @@ public:
 
     Event poll(std::size_t idx) {
         Event evt = events[idx];
-        if (evt != Event::Idle) {
-            events[idx] = Event::Idle;
-        }
+        events[idx] = Event::Idle;
         return evt;
     }
 };

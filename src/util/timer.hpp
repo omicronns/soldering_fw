@@ -19,7 +19,7 @@ public:
     {
         for (std::size_t idx = 0; idx < TimersCount; idx += 1)
         {
-            if (times[idx] <= periods[idx])
+            if (times[idx] < periods[idx])
             {
                 times[idx] += time - last_time;
             }
@@ -29,7 +29,7 @@ public:
 
     bool trig(std::size_t idx)
     {
-        bool trig = times[idx] > periods[idx];
+        bool trig = times[idx] >= periods[idx];
         if (trig) {
             times[idx] = 0;
         }
