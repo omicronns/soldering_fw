@@ -44,8 +44,8 @@ UiSchedule<2> ui_main{{&toolCH1, &toolCH2}};
 UiSchedule<1> ui_menu{{&rect}};
 UiProcess* ui_active = &ui_main;
 
-using Buttons = InputMgr<1>;
-Buttons in{{Buttons::Type::Double}, 150};
+using Buttons = Input<1>;
+Buttons in{{Buttons::Type::Double}, 130};
 int s = 0, d = 0, l = 0;
 
 void loop()

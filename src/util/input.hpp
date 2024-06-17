@@ -3,7 +3,7 @@
 
 
 template<std::size_t Count>
-class InputMgr {
+class Input {
 public:
     enum class Type {
         Single,
@@ -23,6 +23,9 @@ private:
         Pressed0,
         Unpressed1,
         Pressed1,
+        LongHold,
+        LongHoldWait,
+        CooldownLong,
         Cooldown
     };
 
@@ -32,7 +35,7 @@ private:
     Timer<Count> timer;
 
 public:
-    InputMgr(std::array<Type, Count> cfg, uint32_t period) :
+    Input(std::array<Type, Count> cfg, uint32_t period) :
         cfg{cfg}, state{State::Idle}, events{Event::Idle}, timer{{period}}
     {
     }
@@ -81,13 +84,34 @@ public:
                 case State::Pressed1:
                     if (timer.trig(idx)) {
                         if (values[idx] == 0) {
-                            state[idx] = State::Cooldown;
+                            state[idx] = State::LongHoldWait;
                             events[idx] = Event::Long;
                         }
                         else {
                             state[idx] = State::Cooldown;
                             events[idx] = Event::Single;
                         }
+                    }
+                    break;
+                case State::LongHold:
+                    if (timer.trig(idx)) {
+                        if (values[idx] == 0) {
+                            state[idx] = State::LongHoldWait;
+                            events[idx] = Event::Long;
+                        }
+                        else {
+                            state[idx] = State::CooldownLong;
+                        }
+                    }
+                    break;
+                case State::LongHoldWait:
+                    if (timer.trig(idx)) {
+                        state[idx] = State::LongHold;
+                    }
+                    break;
+                case State::CooldownLong:
+                    if (timer.trig(idx)) {
+                        state[idx] = State::Cooldown;
                     }
                     break;
                 case State::Cooldown:

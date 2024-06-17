@@ -17,7 +17,7 @@ void test_timer(void)
 
 void test_input_single_single(void)
 {
-    using Input1 = InputMgr<1>;
+    using Input1 = Input<1>;
     Input1 uut{{Input1::Type::Single}, 100};
     TEST_ASSERT_EQUAL(Input1::Event::Idle, uut.poll(0));
     uut.process(0, {0});
@@ -29,7 +29,7 @@ void test_input_single_single(void)
 
 void test_input_double_single(void)
 {
-    using Input1 = InputMgr<1>;
+    using Input1 = Input<1>;
     Input1 uut{{Input1::Type::Double}, 100};
     TEST_ASSERT_EQUAL(Input1::Event::Idle, uut.poll(0));
     uut.process(0, {0});
@@ -43,7 +43,7 @@ void test_input_double_single(void)
 
 void test_input_double_single_longer(void)
 {
-    using Input1 = InputMgr<1>;
+    using Input1 = Input<1>;
     Input1 uut{{Input1::Type::Double}, 100};
     TEST_ASSERT_EQUAL(Input1::Event::Idle, uut.poll(0));
     uut.process(0, {0});
@@ -59,7 +59,7 @@ void test_input_double_single_longer(void)
 
 void test_input_double_long(void)
 {
-    using Input1 = InputMgr<1>;
+    using Input1 = Input<1>;
     Input1 uut{{Input1::Type::Double}, 100};
     TEST_ASSERT_EQUAL(Input1::Event::Idle, uut.poll(0));
     uut.process(0, {0});
