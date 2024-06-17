@@ -4,6 +4,8 @@
 #include <ui/widgets/tool.hpp>
 #include <ui/objects/rect.hpp>
 
+#include <input.hpp>
+
 #define TFT_RST PA12
 #define TFT_DC PA11
 #define TFT_MOSI PA10
@@ -42,17 +44,31 @@ UiSchedule<2> ui_main{{&toolCH1, &toolCH2}};
 UiSchedule<1> ui_menu{{&rect}};
 UiProcess* ui_active = &ui_menu;
 
+using Buttons = InputMgr<1>;
+Buttons in{{Buttons::Type::Double}, 180};
+Buttons::Event last = Buttons::Event::Idle;
+
+constexpr int x = sizeof(UiTool);
+
 void loop()
 {
-    toolCH1.setTemps(512, analogRead(TEMP_CH1));
-    toolCH2.setTemps(256, analogRead(TEMP_CH2));
-    if (digitalRead(BTN_UP) == 0) {
-        rect.mark();
-        ui_active = &ui_menu;
+    in.process(millis(), {digitalRead(BTN_UP)});
+    switch (in.poll(0)) {
+        case Buttons::Event::Single:
+            rect.setColor(color565(255, 0, 0));
+            rect.mark();
+            break;
+        case Buttons::Event::Double:
+            rect.setColor(color565(0, 255, 0));
+            rect.mark();
+            break;
+        case Buttons::Event::Long:
+            rect.setColor(color565(0, 0, 255));
+            rect.mark();
+            break;
     }
-    if (digitalRead(BTN_DN) == 0) {
-        ui_active = &ui_main;
-    }
+    // toolCH1.setTemps(512, analogRead(TEMP_CH1));
+    // toolCH2.setTemps(256, analogRead(TEMP_CH2));
     ui_active->process();
-    delay(100);
+    delay(10);
 }

@@ -23,16 +23,16 @@ public:
             {
                 times[idx] += time - last_time;
             }
-            else
-            {
-                times[idx] = 0;
-            }
             last_time = time;
         }
     }
 
     bool trig(std::size_t idx)
     {
-        return times[idx] > periods[idx];
+        bool trig = times[idx] > periods[idx];
+        if (trig) {
+            times[idx] = 0;
+        }
+        return trig;
     }
 };
